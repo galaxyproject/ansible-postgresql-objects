@@ -39,6 +39,8 @@ pre-task in the same play as this role:
         roles:
           - postgresql_objects
 
+[psycopg2]: http://initd.org/psycopg/
+
 Role Variables
 --------------
 
