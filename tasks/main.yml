@@ -19,6 +19,14 @@
   failed_when: "postgresql_objects_ignore_revoke_failure and revoke.failed is defined and ((revoke.failed and 'does not exist' not in revoke.msg) or (revoke.failed and ',' in item.roles))"
   when: item.state is defined and item.state == 'absent'
 
+- name: Drop Schemas
+  shell: echo DROP SCHEMA IF EXISTS '{{ item.name }}' | psql -w {{ '-h ' ~ postgresql_objects_login_host if postgresql_objects_login_host is defined else '' }} {{ '-U ' ~ postgresql_objects_login_user if postgresql_objects_login_user is defined else '' }} {{ '-p ' ~ postgresql_objects_port if postgresql_objects_port is defined else '' }} {{ item.database }}
+  register: psql
+  failed_when: psql.stderr.startswith( 'ERROR:' )
+  changed_when: psql.stderr == ''
+  with_items: postgresql_objects_schemas
+  when: item.database is defined and item.name is defined and item.state is defined and item.state == 'absent'
+
 # Drop databases first so later user drop can succeed
 - name: Drop databases
   postgresql_db: name={{ item.name }}
@@ -93,12 +101,13 @@
   with_items: postgresql_objects_databases
   when: item.state is not defined or (item.state is defined and item.state == 'present')
 
-- name: Create or Drop Schemas
-  shell: echo {{ 'DROP' if item.state is defined and item.state == 'absent' else 'CREATE' }} SCHEMA '{{ item.name }}' {{ 'AUTHORIZATION '+item.authorization if item.authorization is defined}} | psql -w {{ '-h ' ~ postgresql_objects_login_host if postgresql_objects_login_host is defined else '' }} {{ '-U ' ~ postgresql_objects_login_user if postgresql_objects_login_user is defined else '' }} {{ '-p ' ~ postgresql_objects_port if postgresql_objects_port is defined else '' }} item.database
+- name: Create Schemas
+  shell: echo CREATE SCHEMA IF NOT EXISTS '{{ item.name }}' {{ 'AUTHORIZATION '+item.authorization if item.authorization is defined}} | psql -w {{ '-h ' ~ postgresql_objects_login_host if postgresql_objects_login_host is defined else '' }} {{ '-U ' ~ postgresql_objects_login_user if postgresql_objects_login_user is defined else '' }} {{ '-p ' ~ postgresql_objects_port if postgresql_objects_port is defined else '' }} {{ item.database }}
   register: psql
   failed_when: psql.stderr.startswith( 'ERROR:' )
   changed_when: psql.stderr == ''
   with_items: postgresql_objects_schemas
+  when: item.database is defined and item.name is defined and item.state is not defined or item.state != 'absent'
 
 - name: Grant user database privileges
   postgresql_user: name={{ item.name }}
