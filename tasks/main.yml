@@ -93,6 +93,13 @@
   with_items: postgresql_objects_databases
   when: item.state is not defined or (item.state is defined and item.state == 'present')
 
+- name: Create or Drop Schemas
+  shell: echo {{ 'DROP' if item.state is defined and item.state == 'absent' else 'CREATE' }} SCHEMA '{{ item.name }}' {{ 'AUTHORIZATION '+item.authorization if item.authorization is defined}} | psql -w {{ '-h ' ~ postgresql_objects_login_host if postgresql_objects_login_host is defined else '' }} {{ '-U ' ~ postgresql_objects_login_user if postgresql_objects_login_user is defined else '' }} {{ '-p ' ~ postgresql_objects_port if postgresql_objects_port is defined else '' }} item.database
+  register: psql
+  failed_when: psql.stderr.startswith( 'ERROR:' )
+  changed_when: psql.stderr == ''
+  with_items: postgresql_objects_schemas
+
 - name: Grant user database privileges
   postgresql_user: name={{ item.name }}
                     db={{ item.db }}
