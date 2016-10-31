@@ -1,0 +1,79 @@
+GIT
+  remote: git@github.com:neillturner/kitchen-verifier-serverspec.git
+  revision: 4b27a164ade9993b0201c3341b2c636c07ac3966
+  specs:
+    kitchen-verifier-serverspec (0.6.0)
+      net-ssh (~> 3)
+      test-kitchen (~> 1.4)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    artifactory (2.5.0)
+    diff-lcs (1.2.5)
+    kitchen-ansible (0.45.4)
+      net-ssh (~> 3.0)
+      test-kitchen (~> 1.4)
+    kitchen-docker (2.6.0)
+      test-kitchen (>= 1.0.0)
+    mixlib-install (1.2.3)
+      artifactory
+      mixlib-shellout
+      mixlib-versioning
+    mixlib-shellout (2.2.7)
+    mixlib-versioning (1.1.0)
+    multi_json (1.12.1)
+    net-scp (1.2.1)
+      net-ssh (>= 2.6.5)
+    net-ssh (3.2.0)
+    net-telnet (0.1.1)
+    rspec (3.5.0)
+      rspec-core (~> 3.5.0)
+      rspec-expectations (~> 3.5.0)
+      rspec-mocks (~> 3.5.0)
+    rspec-core (3.5.4)
+      rspec-support (~> 3.5.0)
+    rspec-expectations (3.5.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.5.0)
+    rspec-its (1.2.0)
+      rspec-core (>= 3.0.0)
+      rspec-expectations (>= 3.0.0)
+    rspec-mocks (3.5.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.5.0)
+    rspec-support (3.5.0)
+    safe_yaml (1.0.4)
+    serverspec (2.37.2)
+      multi_json
+      rspec (~> 3.0)
+      rspec-its
+      specinfra (~> 2.53)
+    sfl (2.3)
+    specinfra (2.64.0)
+      net-scp
+      net-ssh (>= 2.7, < 4.0)
+      net-telnet
+      sfl
+    test-kitchen (1.8.0)
+      mixlib-install (~> 1.0, >= 1.0.4)
+      mixlib-shellout (>= 1.2, < 3.0)
+      net-scp (~> 1.1)
+      net-ssh (>= 2.9, < 4.0)
+      safe_yaml (~> 1.0)
+      thor (~> 0.18)
+    thor (0.19.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  kitchen-ansible
+  kitchen-docker
+  kitchen-verifier-serverspec!
+  net-ssh
+  serverspec
+  test-kitchen (= 1.8.0)
+
+BUNDLED WITH
+   1.13.6

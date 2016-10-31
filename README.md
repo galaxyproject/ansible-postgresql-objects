@@ -27,15 +27,6 @@ Python [`psycopg2`][psycopg2] module. This can easily be installed via a
 pre-task in the same play as this role:
 
     - hosts: dbservers
-        pre_tasks:
-          - name: Install psycopg2
-            apt: pkg=python-psycopg2 state=installed
-            sudo: yes
-            when: ansible_os_family = 'Debian'
-          - name: Install psycopg2
-            yum: pkg=python-psycopg2 state=installed
-            sudo: yes
-            when: ansible_os_family = 'RedHat'
         roles:
           - postgresql_objects
 

@@ -1,0 +1,5 @@
+---
+- hosts: test_servers
+  roles:
+    - { role: postgresql_objects,
+        tags: ["postgresql_objects"] }
