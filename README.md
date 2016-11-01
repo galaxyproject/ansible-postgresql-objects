@@ -27,15 +27,6 @@ Python [`psycopg2`][psycopg2] module. This can easily be installed via a
 pre-task in the same play as this role:
 
     - hosts: dbservers
-        pre_tasks:
-          - name: Install psycopg2
-            apt: pkg=python-psycopg2 state=installed
-            sudo: yes
-            when: ansible_os_family = 'Debian'
-          - name: Install psycopg2
-            yum: pkg=python-psycopg2 state=installed
-            sudo: yes
-            when: ansible_os_family = 'RedHat'
         roles:
           - postgresql_objects
 
@@ -72,7 +63,7 @@ Additional variables (`postgresql_objects_login_host`,
 `postgresql_objects_port`) control how to connect to the database as a user
 that has privileges to perform the requested changes. However, these can be
 left unset if you use a system user with administrative privileges in
-PostgreSQL, (such as with `sudo: yes` and `sudo_user: postgres` in your play).
+PostgreSQL, (such as with `become: yes` and `become_user: postgres` in your play).
 
 **`postgresql_objects_groups` caveats**: Managing group membership **does not
 use Ansible modules** because the existing set of provided modules do not
@@ -110,8 +101,8 @@ mechanism to control what database to connect to as the login user):
             owner: pgadmin
       roles:
         - role: postgresql_objects
-          sudo: yes
-          sudo_user: postgres
+          become: yes
+          become_user: postgres
 
 Create a passwordless user (for use with unix domain socket connections) with a
 database of the same name:
@@ -145,8 +136,8 @@ SELECT privileges to `baz` on sequence `bar_quux_seq` in database `foo`:
             privs: SELECT
       roles:
         - role: postgresql_objects
-          sudo: yes
-          sudo_user: postgres
+          become: yes
+          become_user: postgres
 
 Create a group `plugh` and add `foo` and `baz` to this group:
 
@@ -159,8 +150,8 @@ Create a group `plugh` and add `foo` and `baz` to this group:
               - name: baz
       roles:
         - role: postgresql_objects
-          sudo: yes
-          sudo_user: postgres
+          become: yes
+          become_user: postgres
 
 Revoke specific privileges for user `foo`, remove user `baz` from group
 `plugh`, and delete user `baz`:
@@ -195,8 +186,8 @@ Revoke specific privileges for user `foo`, remove user `baz` from group
             state: absent
       roles:
         - role: postgresql_objects
-          sudo: yes
-          sudo_user: postgres
+          become: yes
+          become_user: postgres
 
 Dependencies
 ------------

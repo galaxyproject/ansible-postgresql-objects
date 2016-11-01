@@ -27,3 +27,5 @@ postgresql_objects_users: []
 postgresql_objects_groups: []
 postgresql_objects_databases: []
 postgresql_objects_privileges: []
+
+postgresql_obejcts_install_pretasks: true
