@@ -206,11 +206,9 @@ None
 License
 -------
 
-[Academic Free License ("AFL") v. 3.0][afl]
-
-[afl]: http://opensource.org/licenses/AFL-3.0
+[MIT](https://opensource.org/licenses/MIT)
 
 Author Information
 ------------------
 
-[Nate Coraor](https://github.com/natefoo)
+[Contributors on GitHub](https://github.com/natefoo/ansible-postgresql-objects/graphs/contributors)
