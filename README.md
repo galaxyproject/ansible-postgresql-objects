@@ -58,6 +58,13 @@ Objects are configured via the following variables:
 - `postgresql_objects_databases`: A list of databases to create or drop. List
   items are dictionaries, keys match the [`postgresql_db`][pgdb] module
   parameters.
+- `postgresql_objects_schemas`: A list of schemas to create or drop. List
+  items are dictionaries, keys are:
+    - `name`: name of schema (required)
+    - `authorization`: user to own schema (optional)
+    - `state`: `present` (default) or `absent`
+    - `database`: database to create schema in (required)
+  parameters.
 - `postgresql_objects_privileges`: A list of privileges to grant or revoke.
   List items are dictionaries, keys match the [`postgresql_privs`][pgprivs]
   module parameters.
