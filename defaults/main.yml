@@ -26,4 +26,5 @@ postgresql_objects_ignore_revoke_failure: true
 postgresql_objects_users: []
 postgresql_objects_groups: []
 postgresql_objects_databases: []
+postgresql_objects_schemas: []
 postgresql_objects_privileges: []
