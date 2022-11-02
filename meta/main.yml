@@ -1,10 +1,12 @@
 ---
 galaxy_info:
-  author: "Nate Coraor"
-  description: "Configure PostgreSQL objects: users (roles), databases, and privileges"
-  company: Penn State University
-  license: AFL v3.0
-  min_ansible_version: 1.8
+  namespace: galaxyproject
+  role_name: postgresql_objects
+  author: The Galaxy Project
+  company: The Galaxy Project
+  description: Configure PostgreSQL objects: users (roles), databases, and privileges
+  license: MIT
+  min_ansible_version: 2.4
   platforms:
   - name: EL
     versions:
@@ -42,7 +44,7 @@ galaxy_info:
   - name: Debian
     versions:
     - all
-  categories:
+  galaxy_tags:
   - database
   - database:sql
 dependencies: []
