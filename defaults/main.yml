@@ -1,6 +1,4 @@
 ---
-# defaults file for natefoo.postgresql-objects
-
 # Revoking privileges from a deleted user, database, or table would normally
 # cause a failure with one of the following messages from Postgres:
 #

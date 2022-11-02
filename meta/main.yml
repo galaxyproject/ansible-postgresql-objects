@@ -4,7 +4,7 @@ galaxy_info:
   role_name: postgresql_objects
   author: The Galaxy Project
   company: The Galaxy Project
-  description: Configure PostgreSQL objects: users (roles), databases, and privileges
+  description: "Configure PostgreSQL objects: users (roles), databases, and privileges"
   license: MIT
   min_ansible_version: 2.4
   platforms:

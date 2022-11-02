@@ -15,7 +15,6 @@ configuration. For that, see [galaxyproject.postgresql][gxpostgresql].
 [pgprivs]: http://docs.ansible.com/postgresql_privs_module.html
 [ansiblegalaxy]: https://galaxy.ansible.com
 [gxpostgresql]: https://github.com/galaxyproject/ansible-postgresql/
-[shell]: http://docs.ansible.com/shell_module.html
 
 Requirements
 ------------
@@ -78,14 +77,6 @@ Additional variables (`postgresql_objects_login_host`,
 that has privileges to perform the requested changes. However, these can be
 left unset if you use a system user with administrative privileges in
 PostgreSQL, (such as with `sudo: yes` and `sudo_user: postgres` in your play).
-
-**`postgresql_objects_groups` caveats**: Managing group membership **does not
-use Ansible modules** because the existing set of provided modules do not
-provide the needed functionality for managing groups. Instead, groups are
-managed by piping SQL to the `psql(1)` command line utility with Ansible's
-[`shell`][shell] module, so extra care should be taken when using the group
-functionality. Also, the `postgresql_objects_login_password` option cannot be
-used with group membership management.
 
 **`postgresql_objects_ignore_revoke_failure` caveats**: If you typo a user, db,
 or table to revoke, this will happily indicate that revoking was successful
