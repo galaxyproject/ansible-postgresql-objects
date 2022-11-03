@@ -5,6 +5,11 @@ jobs:
   molecule:
     name: molecule
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        scenario:
+          - default
+          - create-destroy
     steps:
       - uses: actions/checkout@v2
 
@@ -16,7 +21,7 @@ jobs:
         run: pip3 install molecule[docker] ansible-core
 
       - name: Run molecule
-        run: molecule test --all
+        run: molecule test -s ${{ matrix.scenario }}
         env:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
