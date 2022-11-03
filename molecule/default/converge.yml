@@ -1,0 +1,48 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+  become_method: su
+  become_user: postgres
+  roles:
+
+    # ensure the role runs if no objects are specified
+    - role: galaxyproject.postgresql_objects
+
+    # create some stuff, must pass idempotence
+    - role: galaxyproject.postgresql_objects
+      postgresql_objects_users:
+        - name: alice
+        - name: bob
+        - name: carol
+          password: hunter2
+        - name: dan
+        - name: eve
+          state: absent
+        - name: mallory
+      postgresql_objects_groups:
+        - name: friends
+          users:
+            - name: alice
+            - name: bob
+            - name: carol
+            - name: dan
+              state: absent
+        - name: enemies
+          users:
+            - name: mallory
+        - name: ghosts
+          state: absent
+      postgresql_objects_databases:
+        - name: alicedb
+          owner: alice
+        - name: sharedb
+          owner: friends
+        - name: ghostdb
+          state: absent
+      postgresql_objects_privileges:
+        - database: alicedb
+          roles: bob
+          objs: ALL_IN_SCHEMA
+          type: sequence
+          privs: SELECT

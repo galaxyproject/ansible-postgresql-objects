@@ -1,0 +1,84 @@
+---
+
+- name: Verify
+  hosts: all
+  become: true
+  become_method: su
+  become_user: postgres
+  tasks:
+    - block:
+
+        - name: Check users and groups
+          community.postgresql.postgresql_user:
+            name: "{{ item.name }}"
+            state: "{{ item.state | default('present') }}"
+          loop:
+            - name: alice
+            - name: bob
+            - name: carol
+            - name: dan
+            - name: eve
+              state: absent
+            - name: mallory
+            - name: friends
+            - name: enemies
+            - name: ghosts
+              state: absent
+          register: result
+          failed_when: result is changed
+
+        - name: Check group membership
+          community.postgresql.postgresql_membership:
+            group: "{{ item.name }}"
+            target_roles: "{{ item.users }}"
+            state: "{{ item.state | default('present') }}"
+          loop:
+            - name: friends
+              users:
+                - alice
+                - bob
+                - carol
+            - name: friends
+              state: absent
+              users:
+                - dan
+                - mallory
+            - name: enemies
+              users:
+                - mallory
+          register: result
+          failed_when: result is changed
+
+        - name: Check databases
+          community.postgresql.postgresql_db:
+            name: "{{ item.name }}"
+            owner: "{{ item.owner | default(omit) }}"
+            state: "{{ item.state | default('present') }}"
+          loop:
+            - name: alicedb
+              owner: alice
+            - name: sharedb
+              owner: friends
+            - name: ghostdb
+              state: absent
+          register: result
+          failed_when: result is changed
+
+        - name: Check extra privs
+          community.postgresql.postgresql_privs:
+            database: "{{ item.database }}"
+            roles: "{{ item.roles }}"
+            objs: "{{ item.objs }}"
+            type: "{{ item.type }}"
+            privs: "{{ item.privs }}"
+            state: "{{ item.state | default('present') }}"
+          loop:
+            - database: alicedb
+              roles: bob
+              objs: ALL_IN_SCHEMA
+              type: sequence
+              privs: SELECT
+          register: result
+          failed_when: result is changed
+
+      check_mode: true

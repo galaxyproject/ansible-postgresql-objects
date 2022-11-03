@@ -1,0 +1,5 @@
+FROM {{ item.image }}
+
+RUN apt update -qq && DEBIAN_FRONTEND=noninteractive apt install --no-install-recommends -y python3 python3-psycopg2
+
+ENV POSTGRES_PASSWORD molecule

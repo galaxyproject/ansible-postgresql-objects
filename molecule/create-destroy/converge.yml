@@ -1,0 +1,57 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+  become_method: su
+  become_user: postgres
+  roles:
+
+    # this is not idempotent
+
+    # create some stuff
+    - role: galaxyproject.postgresql_objects
+      postgresql_objects_users:
+        - name: alice
+        - name: bob
+        - name: carol
+      postgresql_objects_groups:
+        - name: friends
+          users:
+            - name: alice
+            - name: bob
+            - name: carol
+        - name: pals
+          users:
+            - name: alice
+            - name: bob
+      postgresql_objects_databases:
+        - name: alicedb
+          owner: alice
+        - name: nobodydb
+      postgresql_objects_privileges:
+        - database: alicedb
+          roles: mallory
+          type: database
+          privs: ALL
+          state: absent
+
+    - role: galaxyproject.postgresql_objects
+      postgresql_objects_users:
+        - name: alice
+          state: absent
+      postgresql_objects_databases:
+        - name: alicedb
+          state: absent
+      postgresql_objects_groups:
+        - name: friends
+          users:
+            - name: carol
+              state: absent
+        - name: pals
+          state: absent
+      postgresql_objects_privileges:
+        - database: alicedb
+          roles: mallory
+          type: database
+          privs: ALL
+          state: absent

@@ -137,7 +137,6 @@ SELECT privileges to `baz` on sequence `bar_quux_seq` in database `foo`:
     postgresql_objects_users:
       - name: baz
         db: foo
-        priv: "bar:ALL"
     postgresql_objects_privileges:
       - database: foo
         roles: baz
