@@ -6,45 +6,43 @@ galaxy_info:
   company: The Galaxy Project
   description: "Configure PostgreSQL objects: users (roles), databases, and privileges"
   license: MIT
-  min_ansible_version: 2.4
+  min_ansible_version: "2.4"
   platforms:
-  - name: EL
-    versions:
-    - all
-  - name: GenericUNIX
-    versions:
-    - all
-    - any
-  - name: Fedora
-    versions:
-    - all
-  - name: opensuse
-    versions:
-    - all
-  - name: Amazon
-    versions:
-    - all
-  - name: GenericBSD
-    versions:
-    - all
-    - any
-  - name: FreeBSD
-    versions:
-    - all
-  - name: Ubuntu
-    versions:
-    - all
-  - name: SLES
-    versions:
-    - all
-  - name: GenericLinux
-    versions:
-    - all
-    - any
-  - name: Debian
-    versions:
-    - all
+    - name: EL
+      versions:
+        - all
+    - name: GenericUNIX
+      versions:
+        - all
+    - name: Fedora
+      versions:
+        - all
+    - name: opensuse
+      versions:
+        - all
+    - name: Amazon
+      versions:
+        - all
+    - name: GenericBSD
+      versions:
+        - all
+    - name: FreeBSD
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - all
+    - name: SLES
+      versions:
+        - all
+    - name: GenericLinux
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - all
   galaxy_tags:
-  - database
-  - database:sql
+    - database
+    - postgres
+    - postgresql
 dependencies: []
