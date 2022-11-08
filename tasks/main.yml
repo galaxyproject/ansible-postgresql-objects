@@ -1,7 +1,17 @@
 ---
 
+# Fail is used here to make the message stand out (red)
+- name: Warn if deprecated user priv param is set
+  ansible.builtin.fail:
+    msg: "Support for the deprecated `priv` param to postgresql_objects_users has been removed, please use postgresql_objects_privileges instead"
+  loop: "{{ postgresql_objects_users }}"
+  loop_control:
+    label: "{{ item.name }}"
+  when: item.priv is defined
+  ignore_errors: true
+
 - name: Revoke extra privileges
-  community.general.postgresql_privs:
+  community.postgresql.postgresql_privs:
     database: "{{ item.database }}"
     roles: "{{ item.roles }}"
     type: "{{ item.type | default(omit) }}"
@@ -28,7 +38,7 @@
 
 # Drop databases first so later user drop can succeed
 - name: Drop databases
-  community.general.postgresql_db:
+  community.postgresql.postgresql_db:
     name: "{{ item.name }}"
     owner: "{{ item.owner | default(omit) }}"
     template: "{{ item.template | default(omit) }}"
@@ -44,7 +54,7 @@
   when: (item.state | default('present')) == 'absent'
 
 - name: Create and drop users
-  community.general.postgresql_user:
+  community.postgresql.postgresql_user:
     name: "{{ item.name }}"
     password: "{{ item.password | default(omit) }}"
     role_attr_flags: "{{ item.role_attr_flags | default(omit) }}"
@@ -59,7 +69,7 @@
     label: "{{ item.name }}"
 
 - name: Create groups
-  community.general.postgresql_user:
+  community.postgresql.postgresql_user:
     name: "{{ item.name }}"
     password: "{{ item.password | default(omit) }}"
     role_attr_flags: "{{ item.role_attr_flags | default(omit) }}"
@@ -75,7 +85,7 @@
 
 # this could be done more efficiently if we changed the data structure in a backwards-incompatible way
 - name: Add or remove users from groups
-  community.general.postgresql_membership:
+  community.postgresql.postgresql_membership:
     group: "{{ item.0.name }}"
     target_role: "{{ item.1.name }}"
     state: "{{ item.1.state | default('present') }}"
@@ -89,7 +99,7 @@
     label: "{{ item.0.name }}: {{ item.1.name }}"
 
 - name: Drop groups
-  community.general.postgresql_user:
+  community.postgresql.postgresql_user:
     name: "{{ item.name }}"
     state: "{{ item.state }}"
     login_host: "{{ postgresql_objects_login_host | default(omit) }}"
@@ -102,7 +112,7 @@
     label: "{{ item.name }}"
 
 - name: Create databases
-  community.general.postgresql_db:
+  community.postgresql.postgresql_db:
     name: "{{ item.name }}"
     owner: "{{ item.owner | default(omit) }}"
     template: "{{ item.template | default(omit) }}"
@@ -119,22 +129,8 @@
   loop_control:
     label: "{{ item.name }}"
 
-- name: Grant user database privileges
-  community.general.postgresql_user:
-    name: "{{ item.name }}"
-    db: "{{ item.db }}"
-    priv: "{{ item.priv }}"
-    login_host: "{{ postgresql_objects_login_host | default(omit) }}"
-    login_user: "{{ postgresql_objects_login_user | default(omit) }}"
-    login_password: "{{ postgresql_objects_login_password | default(omit) }}"
-    port: "{{ postgresql_objects_port | default(omit) }}"
-  loop: "{{ postgresql_objects_users }}"
-  when: item.db is defined and item.priv is defined and not ((item.state | default('present')) == 'absent')
-  loop_control:
-    label: "{{ item.name }}@{{ item.db | default(none) }}: {{ item.priv | default(none) }}"
-
 - name: Grant extra privileges
-  community.general.postgresql_privs:
+  community.postgresql.postgresql_privs:
     database: "{{ item.database | default(omit) }}"
     roles: "{{ item.roles }}"
     type: "{{ item.type | default(omit) }}"

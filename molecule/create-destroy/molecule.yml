@@ -1,0 +1,31 @@
+---
+dependency:
+  name: galaxy
+  options:
+    force: false  # don't fetch every time
+    role-file: molecule/_common/requirements.yml
+    requirements-file: molecule/_common/requirements.yml
+driver:
+  name: docker
+platforms:
+  - name: postgresql-objects-scenario-create-destroy
+    image: postgres:latest
+    command: postgres
+    dockerfile: ../_common/Dockerfile.j2
+    pre_build_image: false
+provisioner:
+  name: ansible
+verifier:
+  name: ansible
+scenario:
+  test_sequence:
+    - dependency
+    - lint
+    - cleanup
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    - cleanup
+    - destroy
