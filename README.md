@@ -32,12 +32,12 @@ pre-task in the same play as this role:
       - name: Install psycopg2
         apt:
           name: "python{{ (ansible_python.version.major == 3) | ternary('3', '') }}-psycopg2"
-        when: ansible_os_family = "Debian"
+        when: ansible_os_family == "Debian"
       - name: Install psycopg2
         yum:
           name: "python{{ ansible_python.version.major }}-psycopg2"
         become: yes
-        when: ansible_os_family = 'RedHat'
+        when: ansible_os_family == 'RedHat'
     roles:
       - role: galaxyproject.postgresql_objects
         become: true
