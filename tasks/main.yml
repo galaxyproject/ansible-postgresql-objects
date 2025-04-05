@@ -58,6 +58,7 @@
     name: "{{ item.name }}"
     password: "{{ item.password | default(omit) }}"
     role_attr_flags: "{{ item.role_attr_flags | default(omit) }}"
+    conn_limit: "{{ item.conn_limit | default(omit) }}"
     encrypted: "{{ item.encrypted | default(omit) }}"
     state: "{{ item.state | default(omit) }}"
     login_host: "{{ postgresql_objects_login_host | default(omit) }}"
