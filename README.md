@@ -13,9 +13,9 @@ only managing database objects without managing the server installation and
 configuration. For that, see [galaxyproject.postgresql][gxpostgresql].
 
 [ansible]: http://www.ansible.com
-[pguser]: http://docs.ansible.com/postgresql_user_module.html
-[pgdb]: http://docs.ansible.com/postgresql_db_module.html
-[pgprivs]: http://docs.ansible.com/postgresql_privs_module.html
+[pguser]: https://docs.ansible.com/ansible/latest/collections/community/postgresql/postgresql_user_module.html
+[pgdb]: https://docs.ansible.com/ansible/latest/collections/community/postgresql/postgresql_db_module.html
+[pgprivs]: https://docs.ansible.com/ansible/latest/collections/community/postgresql/postgresql_privs_module.html
 [ansiblegalaxy]: https://galaxy.ansible.com
 [gxpostgresql]: https://github.com/galaxyproject/ansible-postgresql/
 
