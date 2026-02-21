@@ -5,7 +5,7 @@ PostgreSQL Objects
 [![Molecule Tests](https://github.com/galaxyproject/ansible-postgresql-objects/actions/workflows/molecule.yml/badge.svg)](https://github.com/galaxyproject/ansible-postgresql-objects/actions/workflows/molecule.yml)
 
 PostgreSQL Objects is an [Ansible][ansible] role for managing PostgreSQL users,
-groups databases, and privileges. It is a small wrapper around the
+groups, databases, and privileges. It is a small wrapper around the
 [`postgresql_user`][pguser], [`postgresql_db`][pgdb] and
 [`postgresql_privs`][pgprivs] standard modules provided with Ansible. Many
 PostgreSQL roles exist in [Ansible Galaxy][ansiblegalaxy] but none exist for
